@@ -1,0 +1,41 @@
+{
+  "name" : "sql-query-glue",
+  "jobMode" : "VISUAL",
+  "description" : "",
+  "role" : "arn:aws:iam::014498622371:role/aws_s3_to_glue",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://aws-glue-assets-014498622371-us-east-1/scripts/sql-query-glue.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-metrics" : "true",
+    "--enable-spark-ui" : "true",
+    "--spark-event-logs-path" : "s3://aws-glue-assets-014498622371-us-east-1/sparkHistoryLogs/",
+    "--enable-job-insights" : "true",
+    "--enable-observability-metrics" : "true",
+    "--enable-glue-datacatalog" : "true",
+    "--enable-continuous-cloudwatch-log" : "true",
+    "--job-bookmark-option" : "job-bookmark-disable",
+    "--job-language" : "python",
+    "--TempDir" : "s3://aws-glue-assets-014498622371-us-east-1/temporary/"
+  },
+  "maxRetries" : 0,
+  "allocatedCapacity" : 2,
+  "timeout" : 480,
+  "maxCapacity" : 2.0,
+  "glueVersion" : "5.0",
+  "numberOfWorkers" : 2,
+  "workerType" : "G.1X",
+  "executionClass" : "STANDARD",
+  "codeGenConfigurationNodes" : "{\"node-1737090474622\":{\"S3DirectTarget\":{\"AutoDataQuality\":{\"EvaluationContext\":\"EvaluateDataQuality_node1737089295866\",\"IsEnabled\":true},\"Compression\":\"none\",\"Format\":\"csv\",\"Inputs\":[\"node-1737090449728\"],\"Name\":\"Amazon S3\",\"PartitionKeys\":[],\"Path\":\"s3://maheswar141001\",\"SchemaChangePolicy\":{\"EnableUpdateCatalog\":false}}},\"node-1737090418173\":{\"S3CsvSource\":{\"AdditionalOptions\":{\"EnableSamplePath\":false,\"SamplePath\":\"s3://maheswar141001-example-bucket-1/info.csv\"},\"Escaper\":\"\",\"Exclusions\":[],\"Name\":\"Amazon S3\",\"OptimizePerformance\":false,\"OutputSchemas\":[{\"Columns\":[{\"Name\":\"id\",\"Type\":\"string\"},{\"Name\":\"details\",\"Type\":\"string\"},{\"Name\":\"mean\",\"Type\":\"string\"}]}],\"Paths\":[\"s3://maheswar141001-example-bucket-1/info.csv\"],\"QuoteChar\":\"quote\",\"Separator\":\"comma\",\"WithHeader\":true}},\"node-1737090449728\":{\"SparkSQL\":{\"Inputs\":[\"node-1737090418173\"],\"Name\":\"SQL Query\",\"OutputSchemas\":[{\"Columns\":[{\"Name\":\"id\",\"Type\":\"string\"},{\"Name\":\"details\",\"Type\":\"string\"},{\"Name\":\"mean\",\"Type\":\"string\"}]}],\"SqlAliases\":[{\"Alias\":\"myDataSource\",\"From\":\"node-1737090418173\"}],\"SqlQuery\":\"select * from myDataSource\\nwhere id = 7;\"}}}",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "SQL",
+    "branch" : "main",
+    "folder" : "glue job"
+  }
+}
